@@ -13,3 +13,9 @@
 echo "Calling from precommit works."
 echo "Finished pre-commit checks"
 
+if [ -d .gitignore]; then
+	echo ".gitignore present"
+else
+	echo ">> NOTE: .gitignore not present"
+fi
+
