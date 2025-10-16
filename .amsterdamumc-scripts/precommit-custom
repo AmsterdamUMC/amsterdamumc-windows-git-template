@@ -5,17 +5,20 @@
 # Additions specific for the AmsterdamUMC
 #
 # TODO add the folloing steps:
-# Check existance .gitignore
+# V Check existance .gitignore
 # Check existance excluded data directory in .gitignore
 # Check existance on FS of the excluded data directory
 # Start the implementation of the JIRA-task in the order found in 
 # sub-tasks of RDMR-373
 echo "Calling from precommit works."
-echo "Finished pre-commit checks"
 
-if [ -d .gitignore]; then
+
+if [ -d .gitignore ]; then
 	echo ".gitignore present"
 else
 	echo ">> NOTE: .gitignore not present"
 fi
 
+
+
+echo "Finished pre-commit checks"

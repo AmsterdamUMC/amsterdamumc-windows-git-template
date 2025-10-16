@@ -14,6 +14,14 @@ Git:
 Overview and explaination of the files in the RS-project template
 Data directory
 Pre-commit checks implemented
+
+
+The following notes can be issued from the pre-commit check. The notes are alway preceeded by
+two angular braces: '>>' 
+1) >> NOTE: .gitignore not present
+	TODO add explaination
+2) 
+
 TDD
 Citations
 	DOI
