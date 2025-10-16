@@ -6,29 +6,37 @@
 #
 # TODO add the folloing steps:
 # V Check existance .gitignore
-# Check existance excluded data directory in .gitignore
-# Check existance on FS of the excluded data directory
+# V Check existance excluded data directory in .gitignore
+# V Check existance on FS of the excluded data directory
 # Start the implementation of the JIRA-task in the order found in 
 # sub-tasks of RDMR-373
 
 DATA_DIR=./private-data
 echo "Starting pre-commit checks"
 
-if [ -d .gitignore ]; then
+if [ -f .gitignore ]; then
 	echo "OK: .gitignore present"
 else
 	echo ">> NOTE: .gitignore not present"
 fi
 
 if [ -d $DATA_DIR ]; then
-	echo "OK: $DATA_DIR present"
+	echo "OK: $DATA_DIR directory present"
+	if [ -f .gitignore ]; then
+		
+		NUMBER_MATCHES_FOUND=$(grep -c -e $DATA_DIR .gitignore)
+		
+		if [[ NUMBER_MATCHES_FOUND -ne 0 ]]; then
+			echo "OK: Private / confidential data directory found in .gitignore"
+		else
+			echo ">> NOTE: Private / confidential data-directory not present in .gitignore"
+		fi
+	fi
 else
-	echo ">> NOTE: $DATA_DIR not present"
+	echo ">> NOTE: $DATA_DIR directory not present"
 fi
 
-
-
-exit 777
+exit 0
 
 
 echo "Finished pre-commit checks"
