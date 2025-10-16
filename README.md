@@ -25,7 +25,7 @@
 # Liciense
 
 # Citation
-	## Referencing 
+	## Referencing
 	See GitHub documentation on suported formats. Currently only APA and BibTeX
 	
 # Acknoledgements
