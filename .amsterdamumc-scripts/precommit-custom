@@ -10,6 +10,8 @@
 # Check existance on FS of the excluded data directory
 # Start the implementation of the JIRA-task in the order found in 
 # sub-tasks of RDMR-373
+
+DATA_DIR=./private-data
 echo "Starting pre-commit checks"
 
 if [ -d .gitignore ]; then
@@ -18,8 +20,15 @@ else
 	echo ">> NOTE: .gitignore not present"
 fi
 
+if [ -d $DATA_DIR ]; then
+	echo "OK: $DATA_DIR present"
+else
+	echo ">> NOTE: $DATA_DIR not present"
+fi
 
-exit 0
+
+
+exit 777
 
 
 echo "Finished pre-commit checks"
