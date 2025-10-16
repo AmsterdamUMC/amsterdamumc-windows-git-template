@@ -1,4 +1,4 @@
 #!/bin/sh
 #
 echo "Calling from precommit works."
-exit 0
+exit 66
