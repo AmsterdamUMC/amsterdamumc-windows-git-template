@@ -1,0 +1,19 @@
+This project is a Windows environment project-template intended 
+to give you a head-start for your Reseach Software (RS) project. 
+It contains a basic setup following FAIR-principles, 
+privacy-regulations, reproduciality and software development standards.
+
+Please read this file before starting your development, but also feel free
+to modify or discard any of the things provided in this project if it does
+not meet your needs.
+
+Content:
+Run-time environments: myDRE
+Git
+Overview and explaination of the files in the RS-project template
+Data directory
+Pre-commit checks implemented
+TDD
+Citations
+	DOI
+	CFF / BibTeX
