@@ -2,24 +2,70 @@
 
 #
 #
-# Additions specific for the AmsterdamUMC
+# Additions to a pre-commit check specific for the AmsterdamUMC
 #
-# TODO add the folloing steps:
-# V Check existance .gitignore
-# V Check existance excluded data directory in .gitignore
-# V Check existance on FS of the excluded data directory
-# Start the implementation of the JIRA-task in the order found in 
+# TODO The implementation of the JIRA-task in the order found in 
 # sub-tasks of RDMR-373
 
-DATA_DIR=./private-data
-echo "Starting pre-commit checks"
+DATA_DIR=private-data/
 
+DIRECTORIES_TO_CHECK=`ls -dr */`
+EXCLUDED_DIRECTORIES=(
+	$DATA_DIR
+)
+
+
+
+#
+# Function to display a message to the user that a potential issue has been
+# found in a file about to be commited / pushed.
+#
+# # Required parameters:
+# $1 the message
+#
+# Example:
+# message('The file letter.txt contains a surname')
+
+message() {
+	echo "Note: "
+} 
+
+#
+# Function to check, recursively and case insensitively, if files in a directory 
+# contain one or more strings which are listed in another file. 
+#
+# Required parameters:
+# $1 the directory to scan in files in
+# $2 the file which contains the strings to scan for.
+#
+# Example: 
+# scan_for_tokens('./scr', '.amsterdamumc-scripts/lookup-items/streetnames.txt') 
+scan_for_tokens() {
+	grep -i -n -l -r -f $2 $1
+}
+
+
+#echo "Starting pre-commit checks in:"
+#echo "$DIRECTORIES_TO_CHECK"
+#echo "Excluded are:"
+#echo "$EXCLUDED_DIRECTORIES"
+
+
+scan_for_tokens ./test/src/*  .amsterdamumc-scripts/lookup-items/streetnames.txt
+
+# 
+# Check existance .gitignore
+# 
 if [ -f .gitignore ]; then
 	echo "OK: .gitignore present"
 else
 	echo ">> NOTE: .gitignore not present"
 fi
 
+#
+# Check if excluded data directory is in .gitignore
+# and if it exists on FS
+# 
 if [ -d $DATA_DIR ]; then
 	echo "OK: $DATA_DIR directory present"
 	if [ -f .gitignore ]; then
@@ -36,7 +82,14 @@ else
 	echo ">> NOTE: $DATA_DIR directory not present"
 fi
 
-exit 0
+#
+# Scan the all underlying directories and the top directory (except the 
+# DATA_DIR) for files containing surnames. Based on the files from the
+# DEDUCE project: https://github.com/vmenger/deduce/tree/main/deduce/data/lookup/src/names 
+# Publication: http://www.sciencedirect.com/science/article/pii/S0736585316307365 
+#
+# The follwing surnames have been removed to eliminate false-positive warning 
+# messages:
 
 
 echo "Finished pre-commit checks"

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+#
+# Script to check if the ../precommit-custom script correctly picks up privacy
+# sensitive values found in files.
+#
+#
+exec ..\precommit-custom > .\test-output.txt
+
+
+
+# del .\test-output.txt

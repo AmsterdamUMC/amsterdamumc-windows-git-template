@@ -11,6 +11,10 @@
 	
 # Usage
 	## Running the software
+	The directory .amsterdamumc-scripts\test contains a number of example 
+	source-code file which raise the warinings. It is use to assertain if the
+	precommit-custom script works correctly. The tests can be run with
+	the script: run-tests.sh found in that directory.
 
 # Help
 
