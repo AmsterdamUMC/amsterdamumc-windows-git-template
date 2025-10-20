@@ -41,7 +41,12 @@ message() {
 # Example: 
 # scan_for_tokens('./scr', '.amsterdamumc-scripts/lookup-items/streetnames.txt') 
 scan_for_tokens() {
-	grep -i -n -l -r -f $2 $1
+	echo "Param 1: $1"
+	echo "Param 2: $2"
+	dir $1
+    # grep --version
+	# grep --help
+	grep -r -w -i -n -o -f $2 $1
 }
 
 
@@ -50,6 +55,8 @@ scan_for_tokens() {
 #echo "Excluded are:"
 #echo "$EXCLUDED_DIRECTORIES"
 
+
+echo "Performing pre-commit checks"
 
 scan_for_tokens ./test/src/*  .amsterdamumc-scripts/lookup-items/streetnames.txt
 
@@ -91,5 +98,5 @@ fi
 # The follwing surnames have been removed to eliminate false-positive warning 
 # messages:
 
-
+exit 777
 echo "Finished pre-commit checks"
