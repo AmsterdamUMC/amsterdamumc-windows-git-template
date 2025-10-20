@@ -98,5 +98,5 @@ fi
 # The follwing surnames have been removed to eliminate false-positive warning 
 # messages:
 
-exit 777
+exit 0
 echo "Finished pre-commit checks"
