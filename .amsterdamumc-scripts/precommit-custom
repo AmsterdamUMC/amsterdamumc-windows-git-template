@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 #
@@ -30,28 +30,6 @@ message() {
 	echo "Note: "
 } 
 
-#
-# Function to check, recursively and case insensitively, if files in a directory 
-# contain one or more strings which are listed in another file. 
-#
-# Required parameters:
-# $1 the directory to scan in files in
-# $2 the file which contains the strings to scan for.
-#
-# Example: 
-# scan_for_tokens('./scr', '.amsterdamumc-scripts/lookup-items/streetnames.txt') 
-scan_for_tokens() {
-	# echo "Param 1: $1"
-	# echo "Param 2: $2"
-	# dir $1
-    # grep --version
-	# grep --help
-	echo "Scanning ..."
-	# grep -r -w -i -n -o -f $2 $1
-	exec "findstr /I /N /S /G:.amsterdamumc-scripts\lookup_items\surnames.txt *"
-	echo "Finished "
-}
-
 
 #echo "Starting pre-commit checks in:"
 #echo "$DIRECTORIES_TO_CHECK"
@@ -61,7 +39,10 @@ scan_for_tokens() {
 
 echo "Performing pre-commit checks"
 
-scan_for_tokens .amsterdamumc-scripts/test/* .amsterdamumc-scripts/lookup_items/streetnames.txt
+# exec ".amsterdamumc-scripts/scan-surnames.bat"
+exec "findstr /I /N /S /G:.amsterdamumc-scripts\lookup_items\surnames.txt ../*"
+
+exit 777
 
 # 
 # Check existance .gitignore
