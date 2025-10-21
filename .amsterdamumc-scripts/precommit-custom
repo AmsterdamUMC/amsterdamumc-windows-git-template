@@ -41,12 +41,15 @@ message() {
 # Example: 
 # scan_for_tokens('./scr', '.amsterdamumc-scripts/lookup-items/streetnames.txt') 
 scan_for_tokens() {
-	echo "Param 1: $1"
-	echo "Param 2: $2"
-	dir $1
+	# echo "Param 1: $1"
+	# echo "Param 2: $2"
+	# dir $1
     # grep --version
 	# grep --help
-	grep -r -w -i -n -o -f $2 $1
+	echo "Scanning ..."
+	# grep -r -w -i -n -o -f $2 $1
+	exec "findstr /I /N /S /G:.amsterdamumc-scripts\lookup_items\surnames.txt *"
+	echo "Finished "
 }
 
 
@@ -58,7 +61,7 @@ scan_for_tokens() {
 
 echo "Performing pre-commit checks"
 
-scan_for_tokens ./test/src/*  .amsterdamumc-scripts/lookup-items/streetnames.txt
+scan_for_tokens .amsterdamumc-scripts/test/* .amsterdamumc-scripts/lookup_items/streetnames.txt
 
 # 
 # Check existance .gitignore
@@ -98,5 +101,5 @@ fi
 # The follwing surnames have been removed to eliminate false-positive warning 
 # messages:
 
-exit 0
+exit 777
 echo "Finished pre-commit checks"
