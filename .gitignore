@@ -2,4 +2,12 @@
 # AmsterdamUMC .gitignore file
 #
 
-./private-data/
+# The directory in which data should be placed which must not be included in
+# Git and GitHub. 
+# Patient health information, patient contact information,  image-data (DICOM), 
+# omics-data and secrets (API-keys, passwords, private-keys)
+
+private-data/**
+
+# add this directory to the release versions
+# .amsterdamumc-scripts/**

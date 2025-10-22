@@ -6,6 +6,7 @@
 
 # Getting started
 	## Prerequisits
+	TODO lookup the version of WinBash and the underlying Cywin 
 	## Runtime enviroment
 	## Installation
 	

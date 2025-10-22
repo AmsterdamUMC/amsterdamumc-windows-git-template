@@ -7,40 +7,52 @@
 # TODO The implementation of the JIRA-task in the order found in 
 # sub-tasks of RDMR-373
 
-DATA_DIR=private-data/
 
-DIRECTORIES_TO_CHECK=`ls -dr */`
-EXCLUDED_DIRECTORIES=(
-	$DATA_DIR
-)
+# Remove all comments and empty lines from .gitignore
+IGNORED_DIRECTORIES=$(cat .gitignore | grep -v -e '^[[:space:]]*$' -e '^#')
+
 
 
 
 #
-# Function to display a message to the user that a potential issue has been
-# found in a file about to be commited / pushed.
+# Function to display a message to the user prefixed with '>> NOTE: '
 #
 # # Required parameters:
-# $1 the message
+# $1 the messag
 #
 # Example:
-# message('The file letter.txt contains a surname')
+# message "The file letter.txt contains a surname"
 
 message() {
-	echo "Note: "
+	echo -e ">> NOTE: $1"
 } 
 
+echo -e ""
+echo -e "Ignored are:"
+echo "$IGNORED_DIRECTORIES"
+echo -e ""
 
-#echo "Starting pre-commit checks in:"
-#echo "$DIRECTORIES_TO_CHECK"
-#echo "Excluded are:"
-#echo "$EXCLUDED_DIRECTORIES"
+echo -e "Performing pre-commit checks"
+
+# shopt -s nullglobs
+for item in *; do
+	NUMBER_OF_ITEMS_MATCHED=0;
+	for ignored_item in $IGNORED_DIRECTORIES; do
+		# echo "Comparing : $item with $ignored_item"
+		if [[ "$ignored_item" == "$item"* ]]; then
+			NUMBER_OF_ITEMS_MATCHED=$((NUMBER_OF_ITEMS_MATCHED + 1))
+		fi
+		if [[ $NUMBER_OF_ITEMS_MATCHED == 0 ]]; then
+			#echo "N Matched Items: " $NUMBER_OF_ITEMS_MATCHED
+			echo -e "Checking in $item"
+			exec -a $0 .amsterdamumc-scripts/scan-surnames.bat `echo "$item"`
+		fi
+	done
+done
 
 
-echo "Performing pre-commit checks"
-
-# exec ".amsterdamumc-scripts/scan-surnames.bat"
-exec "findstr /I /N /S /G:.amsterdamumc-scripts\lookup_items\surnames.txt ../*"
+# exec -a $0 .amsterdamumc-scripts/scan-surnames.bat `echo "$ITEMS_TO_CHECK"`
+# cmd /C "findstr /I /N /S /G:.lookup_items/surnames.txt * > output.txt"
 
 exit 777
 
@@ -50,7 +62,7 @@ exit 777
 if [ -f .gitignore ]; then
 	echo "OK: .gitignore present"
 else
-	echo ">> NOTE: .gitignore not present"
+	message ".gitignore not present"
 fi
 
 #
@@ -66,11 +78,11 @@ if [ -d $DATA_DIR ]; then
 		if [[ NUMBER_MATCHES_FOUND -ne 0 ]]; then
 			echo "OK: Private / confidential data directory found in .gitignore"
 		else
-			echo ">> NOTE: Private / confidential data-directory not present in .gitignore"
+			message "Private / confidential data-directory not present in .gitignore"
 		fi
 	fi
 else
-	echo ">> NOTE: $DATA_DIR directory not present"
+	message "$DATA_DIR directory not present"
 fi
 
 #
