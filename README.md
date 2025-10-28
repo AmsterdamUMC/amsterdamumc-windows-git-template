@@ -6,7 +6,7 @@
 
 # Getting started
 	## Prerequisits
-	TODO lookup the version of WinBash and the underlying Cywin 
+	TODO lookup the version of Winbash and the underlying Cywin 
 	## Runtime enviroment
 	## Installation
 	
@@ -16,6 +16,7 @@
 	source-code file which raise the warinings. It is use to assertain if the
 	precommit-custom script works correctly. The tests can be run with
 	the script: run-tests.sh found in that directory.
+	mevrouw Aafjes-Şimşek
 
 # Help
 

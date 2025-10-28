@@ -43,9 +43,11 @@ for item in *; do
 			NUMBER_OF_ITEMS_MATCHED=$((NUMBER_OF_ITEMS_MATCHED + 1))
 		fi
 		if [[ $NUMBER_OF_ITEMS_MATCHED == 0 ]]; then
-			#echo "N Matched Items: " $NUMBER_OF_ITEMS_MATCHED
+			# echo "N Matched Items: " $NUMBER_OF_ITEMS_MATCHED
 			echo -e "Checking in $item"
-			exec -a $0 .amsterdamumc-scripts/scan-surnames.bat `echo "$item"`
+			# Look for the surnames defined in surname.txt file. Refer to 
+			# grep --help for the meaning of the parameters used.
+			grep -n -w -i -d recurse --file .amsterdamumc-scripts/lookup_items/surnames.txt `echo "$item"` --colour
 		fi
 	done
 done
@@ -54,7 +56,6 @@ done
 # exec -a $0 .amsterdamumc-scripts/scan-surnames.bat `echo "$ITEMS_TO_CHECK"`
 # cmd /C "findstr /I /N /S /G:.lookup_items/surnames.txt * > output.txt"
 
-exit 777
 
 # 
 # Check existance .gitignore

@@ -5,7 +5,11 @@ REM
 
 
 ECHO Scanning for surnames in %1
-findstr /I /N /S /G:.amsterdamumc-scripts\lookup_items\surnames.txt %1*
+
+set /p SEARCH_TOKENS=< .amsterdamumc-scripts\lookup_items\surnames.txt
+echo Searching for : %SEARCH_TOKENS%
+
+findstr /i %SEARCH_TOKENS% %1*
 
 REM TODO remove the temp-output.txt file
 ECHO:
