@@ -12,9 +12,19 @@ def fetch_forbidden_extensions():
 
 def generate_gitignore(extensions):
     lines = [
+        
+        "",
+        "# The 'data' directory is where all data should be placed which must not be included in",
+        "# Git and GitHub.",
+        "# For example output of runs, secrets (API-keys, passwords, private-keys)",
+        "\n",
+        "data/**",
+        "",
         "# Auto-generated from forbidden-extensions.txt",
         "# Do not edit this section manually. Edit the central file instead.",
-        "",
+        "#",
+        "# AmsterdamUMC .gitignore file",
+        "#",
     ]
     for ext in extensions:
         ext = ext.strip()
