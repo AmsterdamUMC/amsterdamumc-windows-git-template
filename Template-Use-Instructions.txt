@@ -12,7 +12,15 @@ Run-time environments: myDRE
 Git: 
 * Configure your email and organisation
 Overview and explaination of the files in the RS-project template
+
 Data directory
+
+Consider very carefully where you place your data-files. Certain files contain sensitive information
+such as patient information, secrets used to access web-services, output files such as logs.
+It is considered good practice to place all these files under the 'data' directory. This 
+directory is ignored by Git in order to reduce the chance that you accidentally commit
+this type of data. 
+
 Pre-commit checks implemented
 
 

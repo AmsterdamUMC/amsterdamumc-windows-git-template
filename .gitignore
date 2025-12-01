@@ -7,7 +7,7 @@
 # Patient health information, patient contact information,  image-data (DICOM), 
 # omics-data and secrets (API-keys, passwords, private-keys)
 
-private-data/**
+data/**
 
 # add this directory to the release versions
 # .amsterdamumc-scripts/**
