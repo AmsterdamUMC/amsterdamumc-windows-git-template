@@ -4,7 +4,8 @@
 
 # The directory in which data should be placed which must not be included in
 # Git and GitHub. 
-# For example output of runs, secrets (API-keys, passwords, private-keys)
+# For example: secrets (API-keys, passwords, private-keys), confidential data,
+# retraceable personal health data.
 
 data/**
 

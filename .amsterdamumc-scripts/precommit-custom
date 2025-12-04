@@ -27,10 +27,10 @@ message() {
 	echo -e ">> NOTE: $1"
 } 
 
-echo -e ""
-echo -e "Ignored are:"
-echo "$IGNORED_DIRECTORIES"
-echo -e ""
+#echo -e ""
+#echo -e "Ignored are:"
+#echo "$IGNORED_DIRECTORIES"
+#echo -e ""
 
 echo -e "Performing pre-commit checks"
 
@@ -66,10 +66,30 @@ else
 	message ".gitignore not present"
 fi
 
+
+# 
+# Create a temporary file containing all the added (A) and modified (M) files
+# in uppercase with each line containing the file name and numbered lines
+#
+TEMP_FILE=`mktemp`
+STAGED_FILES_LIST=`git diff --name-only --cached --diff-filter=AM | tr '\n' '\t'`
+echo "Checking the following files staged for commit:"
+echo
+for file_name in $STAGED_FILES_LIST; do
+	echo "Filename: $file_name"
+	awk -v filename=$file_name '{ print filename, NR,"\t", toupper($0) }' $file_name >> $TEMP_FILE
+done
+echo
+time rg -w --regex-size-limit=2G --dfa-size-limit=2G --fixed-strings --f .amsterdamumc-scripts/lookup_items/all-search-items-upper.txt $TEMP_FILE
+
+echo "Removing temporary file: $TEMP_FILE"
+rm $TEMP_FILE
+exit 0
 #
 # Check if excluded data directory is in .gitignore
 # and if it exists on FS
-# 
+#
+DATA_DIR=./data
 if [ -d $DATA_DIR ]; then
 	echo "OK: $DATA_DIR directory present"
 	if [ -f .gitignore ]; then
@@ -77,23 +97,14 @@ if [ -d $DATA_DIR ]; then
 		NUMBER_MATCHES_FOUND=$(grep -c -e $DATA_DIR .gitignore)
 		
 		if [[ NUMBER_MATCHES_FOUND -ne 0 ]]; then
-			echo "OK: Private / confidential data directory found in .gitignore"
+			echo "OK: Data directory found in .gitignore"
 		else
-			message "Private / confidential data-directory not present in .gitignore"
+			message "Data directory not present in .gitignore"
 		fi
 	fi
 else
 	message "$DATA_DIR directory not present"
 fi
 
-#
-# Scan the all underlying directories and the top directory (except the 
-# DATA_DIR) for files containing surnames. Based on the files from the
-# DEDUCE project: https://github.com/vmenger/deduce/tree/main/deduce/data/lookup/src/names 
-# Publication: http://www.sciencedirect.com/science/article/pii/S0736585316307365 
-#
-# The follwing surnames have been removed to eliminate false-positive warning 
-# messages:
-
-# exit 777
 echo "Finished pre-commit checks"
+exit 0
